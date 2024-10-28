@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const postDate = document.createElement("p");
         postDate.classList.add("post-date");
-        postDate.innerText = `Event Date: ${date}`;
+        postDate.innerText = `${date}`;
 
         userInfo.appendChild(username);
         userInfo.appendChild(postDate);
@@ -263,4 +263,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // Inicializar el calendario y mostrar eventos en el feed
     events.forEach(event => addPost(event.content, event.date, event.owner));
     renderCalendar(currentMonth, currentYear);
+});
+
+document.getElementById("search-button").addEventListener("click", () => {
+    const query = document.getElementById("search-input").value.toLowerCase();
+    const feed = document.getElementById("favorites-feed") || document.getElementById("feed");
+
+    Array.from(feed.children).forEach(post => {
+        const content = post.innerText.toLowerCase();
+        post.style.display = content.includes(query) ? "block" : "none";
+    });
+});
+
+// También puedes permitir la búsqueda al presionar "Enter" en el campo de entrada
+document.getElementById("search-input").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        document.getElementById("search-button").click();
+    }
 });

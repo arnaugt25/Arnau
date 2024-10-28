@@ -15,7 +15,7 @@
             </div>
             <nav class="nav-links">
                 <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
-                <a href="favorites.html" class="nav-item active"><i class="fas fa-star"></i> Favorites</a>
+                <a href="favorites.html" class="nav-item active"><i class="fas fa-star"></i> Events</a>
                 <a href="profile.html" class="nav-item"><i class="fas fa-user"></i> Profile</a>
             </nav>
             <button id="logout-button" class="logout-btn">Cerrar Sesión</button>
@@ -23,6 +23,10 @@
 
         <!-- Main Content -->
         <main class="main-content">
+            <div class="search-bar">
+                <input type="text" id="search-input" class="search-input" placeholder="Buscar eventos...">
+                <button id="search-button" class="search-btn"><i class="fas fa-search"></i></button>
+            </div>  
             <h2>Favorite Events</h2>
             <div id="favorites-feed" class="feed">
                 <!-- Favorite posts will be displayed here -->
@@ -31,6 +35,8 @@
 
         <!-- Right Sidebar - Additional Information Section -->
         <aside class="sidebar-right">
+
+            
             <!-- Popular Events Section -->
             <div class="popular-events">
                 <h3>Popular Events</h3>
@@ -108,7 +114,7 @@
 
             const postDate = document.createElement("p");
             postDate.classList.add("post-date");
-            postDate.innerText = `Event Date: ${event.date}`;
+            postDate.innerText = `${event.date}`;
 
             userInfo.appendChild(username);
             userInfo.appendChild(postDate);
