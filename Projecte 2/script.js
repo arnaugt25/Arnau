@@ -11,9 +11,12 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 
 // Array para almacenar los eventos (se almacena en localStorage)
 let events = JSON.parse(localStorage.getItem("events")) || [];
+let likedEvents = JSON.parse(localStorage.getItem("likedEvents")) || [];
 
+// Guardar eventos en localStorage
 function saveEvents() {
     localStorage.setItem("events", JSON.stringify(events));
+    localStorage.setItem("likedEvents", JSON.stringify(likedEvents));
 }
 
 function renderCalendar(month, year) {
@@ -64,7 +67,6 @@ function renderCalendar(month, year) {
     }
 }
 
-
 // Navegación del calendario
 document.getElementById('prev-month').addEventListener('click', () => {
     currentMonth--;
@@ -107,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const logoutButton = document.getElementById("logout-button");
 
     // Verificar si el usuario ya ha iniciado sesión
-    const currentUsername = localStorage.getItem("username");
+    let currentUsername = localStorage.getItem("username");
     if (currentUsername) {
         loginModal.classList.add("hidden");
         mainContent.classList.remove("hidden");
@@ -121,6 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const username = usernameInput.value.trim();
         if (username) {
             localStorage.setItem("username", username); // Guardar en localStorage
+            currentUsername = username;
             document.getElementById("step1").classList.add("hidden");
             document.getElementById("step2").classList.remove("hidden");
         } else {
@@ -145,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const postDateInput = document.getElementById("post-date");
     const feed = document.getElementById("feed");
 
-    function addPost(content, date) {
+    function addPost(content, date, owner) {
         const post = document.createElement("div");
         post.classList.add("post");
 
@@ -154,14 +157,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const avatar = document.createElement("div");
         avatar.classList.add("post-avatar");
-        avatar.innerText = currentUsername.charAt(0).toUpperCase();
+        avatar.innerText = owner.charAt(0).toUpperCase();
 
         const userInfo = document.createElement("div");
         userInfo.classList.add("post-user-info");
 
         const username = document.createElement("p");
         username.classList.add("post-username");
-        username.innerText = `@${currentUsername}`;
+        username.innerText = `@${owner}`;
 
         const postDate = document.createElement("p");
         postDate.classList.add("post-date");
@@ -183,19 +186,46 @@ document.addEventListener("DOMContentLoaded", () => {
         const postActions = document.createElement("div");
         postActions.classList.add("post-actions");
 
-        const commentButton = document.createElement("button");
-        commentButton.innerHTML = `<i class="far fa-comment"></i>`;
-        const retweetButton = document.createElement("button");
-        retweetButton.innerHTML = `<i class="fas fa-retweet"></i>`;
         const likeButton = document.createElement("button");
         likeButton.innerHTML = `<i class="far fa-heart"></i>`;
-        const shareButton = document.createElement("button");
-        shareButton.innerHTML = `<i class="fas fa-share"></i>`;
+        likeButton.classList.add("like-btn");
 
-        postActions.appendChild(commentButton);
-        postActions.appendChild(retweetButton);
+        // Verificar si el evento ya ha sido marcado como favorito
+        const isLiked = likedEvents.some(event => event.content === content && event.date === date && event.owner === owner);
+        if (isLiked) {
+            likeButton.classList.add("liked"); // Cambiar estilo cuando está en favoritos
+            likeButton.innerHTML = `<i class="fas fa-heart"></i>`;
+        }
+
+        likeButton.addEventListener("click", () => {
+            const likedEvent = { content, date, owner };
+            if (likeButton.classList.contains("liked")) {
+                // Quitar de favoritos
+                likeButton.classList.remove("liked");
+                likeButton.innerHTML = `<i class="far fa-heart"></i>`;
+                likedEvents = likedEvents.filter(event => !(event.content === content && event.date === date && event.owner === owner));
+            } else {
+                // Añadir a favoritos
+                likeButton.classList.add("liked");
+                likeButton.innerHTML = `<i class="fas fa-heart"></i>`;
+                likedEvents.push(likedEvent);
+            }
+            saveEvents();
+        });
+
         postActions.appendChild(likeButton);
-        postActions.appendChild(shareButton);
+
+        if (owner === currentUsername) {
+            const deleteButton = document.createElement("button");
+            deleteButton.innerHTML = `<i class="fas fa-trash-alt"></i>`;
+            deleteButton.addEventListener("click", () => {
+                events = events.filter(event => !(event.content === content && event.date === date && event.owner === owner));
+                saveEvents();
+                post.remove();
+                renderCalendar(currentMonth, currentYear);
+            });
+            postActions.appendChild(deleteButton);
+        }
 
         post.appendChild(postHeader);
         post.appendChild(postContent);
@@ -209,37 +239,28 @@ document.addEventListener("DOMContentLoaded", () => {
         const content = postInput.value.trim();
         const date = postDateInput.value;
 
-        if (!content) {
-            alert("Please enter content for the event.");
+        if (!content || !date) {
+            alert("Please enter content and select a date for the event.");
             return;
         }
 
-        if (!date) {
-            alert("Please select a date for the event.");
-            return;
-        }
-
-        // Guardar el evento en el array y en localStorage
-        events.push({ content, date });
+        events.push({ content, date, owner: currentUsername });
         saveEvents();
-
-        // Añadir el evento al feed y resaltar en el calendario
-        addPost(content, date);
+        addPost(content, date, currentUsername);
         renderCalendar(currentMonth, currentYear);
-        
-        // Limpiar el formulario
+
         postInput.value = "";
         postDateInput.value = "";
     });
 
     // Cerrar sesión
     logoutButton.addEventListener("click", () => {
-        localStorage.clear(); // Eliminar todos los datos de localStorage
+        localStorage.clear();
         loginModal.classList.remove("hidden");
         mainContent.classList.add("hidden");
     });
 
     // Inicializar el calendario y mostrar eventos en el feed
-    events.forEach(event => addPost(event.content, event.date));
+    events.forEach(event => addPost(event.content, event.date, event.owner));
     renderCalendar(currentMonth, currentYear);
 });

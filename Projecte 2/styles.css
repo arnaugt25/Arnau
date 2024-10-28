@@ -746,3 +746,119 @@ h2 {
     align-items: center;
     gap: 10px;
 }
+
+/* Sidebar Right with Additional Information */
+.sidebar-right {
+    width: 300px;
+    padding: 20px;
+    background-color: #15202b;
+    color: #d9d9d9;
+}
+
+.popular-events, .recommended-events, .friends-attending {
+    background-color: #192734;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.popular-events h3, .recommended-events h3, .friends-attending h3 {
+    color: #d9d9d9;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #38444d;
+    padding-bottom: 10px;
+}
+
+.popular-event-item, .recommended-event-item, .friend-attending-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #38444d;
+}
+
+.popular-event-item:last-child, .recommended-event-item:last-child, .friend-attending-item:last-child {
+    border-bottom: none;
+}
+
+.popular-event-item p, .recommended-event-item p, .friend-attending-item p {
+    margin: 0;
+}
+
+.event-date {
+    font-size: 14px;
+    color: #8899a6;
+}
+
+/* Sección de Feed de Favoritos */
+#favorites-feed {
+    margin-top: 20px;
+}
+
+/* Edit Profile Modal Styles */
+.edit-profile-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 10;
+}
+
+.edit-profile-container {
+    background-color: #192734;
+    padding: 20px;
+    width: 400px;
+    text-align: center;
+    border-radius: 10px;
+    color: #fff;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #d9d9d9;
+    cursor: pointer;
+}
+
+.edit-profile-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.login-input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 30px;
+    border: 1px solid #38444d;
+    background-color: #253341;
+    color: #d9d9d9;
+    margin-bottom: 15px;
+    outline: none;
+    font-size: 16px;
+    text-align: center;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    font-size: 16px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #1d9bf0;
+    color: white;
+}
+
+.login-btn:hover {
+    background-color: #1a8cd8;
+}
