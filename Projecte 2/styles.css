@@ -3,42 +3,57 @@ body {
     background-color: #15202b;
     color: #d9d9d9;
     font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 /* Wrapper for consistent width */
 .main-content-wrapper {
-    max-width: 1400px;
+    max-width: 1200px;
     min-height: 100vh;
     margin: 0 auto;
     display: flex;
+    padding: 20px;
 }
 
 /* Sidebar Styles */
-.sidebar, .sidebar-right {
+.sidebar {
     background-color: #192734;
     width: 250px;
-    border-radius: 10px;
+    padding-top: 20px;
     color: #d9d9d9;
+    border-radius: 10px;
 }
 
-.icon {
+.sidebar .icon {
     font-size: 36px;
     color: #1d9bf0;
+    margin-bottom: 20px;
 }
 
-/* Navigation Links */
-.nav-link {
+.sidebar .nav-link {
     color: white;
-    padding: 10px;
+    font-size: 1.1em;
+    padding: 10px 15px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.nav-link:hover, .nav-link.active {
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    background-color: #253341;
     color: #1a8cd8;
 }
 
 .logout-btn {
     background-color: #1d9bf0;
     color: white;
+    width: 100%;
+    padding: 10px;
+    border-radius: 25px;
+    margin-top: auto;
     transition: background-color 0.3s;
 }
 
@@ -52,7 +67,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     background-color: #192734;
-    margin: 20px;
+    margin: 0 20px;
 }
 
 .main-content h2 {
@@ -60,77 +75,222 @@ body {
     color: white;
 }
 
-/* Content Area */
-.content {
-    background-color: #192734;
-    padding: 20px;
+/* Profile Header */
+.profile-banner {
+    height: 200px;
+    background-color: #000;
+    position: relative;
+    overflow: hidden;
     border-radius: 10px;
-    color: #d9d9d9;
 }
 
-/* Profile Specific Styles */
-.profile-banner {
-    background-color: #192734;
-    border-radius: 10px;
+.cover-photo {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 }
 
 .profile-avatar-large {
-    background-color: #1d9bf0;
-    color: white;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: -50px;
+    left: 20px;
+    border: 3px solid #15202b;
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    font-weight: bold;
+}
+
+.profile-avatar-large img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+/* Profile Info */
+.profile-info {
+    padding-top: 60px;
+}
+
+.profile-info h3 {
+    font-size: 1.5em;
+    color: white;
+}
+
+.profile-info p {
+    margin: 0;
+    color: #a8a8a8;
+}
+
+.profile-bio a {
+    color: #1d9bf0;
+    text-decoration: none;
+}
+
+.profile-bio a:hover {
+    text-decoration: underline;
+}
+
+.followers-count p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #d9d9d9;
 }
 
 .profile-edit-btn {
-    background-color: #1d9bf0;
-    color: white;
+    background-color: transparent;
+    border: 1px solid #1d9bf0;
+    color: #1d9bf0;
     border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 5px 15px;
+    font-size: 0.9em;
 }
 
 .profile-edit-btn:hover {
-    background-color: #1a8cd8;
+    background-color: #1d9bf0;
+    color: white;
 }
 
-/* Tabs */
-.profile-tabs {
-    background-color: #192734;
-    border-radius: 10px;
+/* Profile Tabs */
+#profile-tabs {
+    margin-top: 20px;
+    border-bottom: 1px solid #253341;
 }
 
-.tab {
-    background-color: #192734;
+#profile-tabs .nav-link {
     color: #d9d9d9;
-    border: none;
-    border-radius: 10px;
+    padding: 10px;
     transition: background-color 0.3s;
+    font-size: 0.9em;
 }
 
-.tab:hover {
-    background-color: #1a8cd8;
+#profile-tabs .nav-link:hover,
+#profile-tabs .nav-link.active {
+    background-color: #1d9bf0;
+    color: white;
+    border-radius: 0;
+    border-bottom: 3px solid #1d9bf0;
+}
+
+/* Right Sidebar */
+.sidebar-right {
+    background-color: #192734;
+    width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.sidebar-right h5 {
+    color: white;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+}
+
+.suggestions {
+    margin-top: 10px;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.suggestion-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.suggestion-item .info {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+.suggestion-item h5 {
+    margin: 0;
+    font-size: 1em;
     color: white;
 }
 
-.tab.active {
-    background-color: #1a8cd8;
+.suggestion-item p {
+    margin: 0;
+    font-size: 0.85em;
+    color: #a8a8a8;
+}
+
+.btn-follow {
+    font-size: 0.9em;
+    color: #1d9bf0;
+    border: 1px solid #1d9bf0;
+    border-radius: 15px;
+    padding: 5px 15px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-follow:hover {
+    background-color: #1d9bf0;
     color: white;
 }
 
-/* Profile Details */
-.profile-details h3 {
-    font-size: 20px;
-    color: white;
-}
-
-.profile-details p {
+/* Tweets Section */
+.tweet {
+    background-color: #253341;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
     color: #d9d9d9;
 }
 
-.profile-details i {
+.tweet p {
+    margin: 0;
+    font-size: 1em;
+}
+
+/* .text-muted {
+    --bs-text-opacity: 1;
+    color: rgb(255 255 255 / 75%) !important;
+} */
+.tweet .text-muted {
+    font-size: 0.8em;
+    color: #a8a8a8;
+    margin-top: 10px;
+}
+
+.tweet img {
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* Personalización del Modal */
+.modal-content {
+    border-radius: 10px;
+    max-width: 400px;
+}
+
+.modal-body i.fab.fa-twitter {
     color: #1d9bf0;
 }
+
+.modal-body h3 {
+    color: white;
+}
+
+.modal-footer p {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+.modal-footer a {
+    color: #1d9bf0;
+}
+
+.btn-outline-light {
+    border: 1px solid #d9d9d9;
+}
+
+.btn-light {
+    color: #15202b;
+    font-weight: bold;
+}
+
