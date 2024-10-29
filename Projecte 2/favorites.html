@@ -3,139 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favorite Events</title>
+    <title>Page Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="icon">
-                <i class="fab fa-x-twitter"></i>
-            </div>
-            <nav class="nav-links">
-                <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
-                <a href="favorites.html" class="nav-item active"><i class="fas fa-star"></i> Events</a>
-                <a href="profile.html" class="nav-item"><i class="fas fa-user"></i> Profile</a>
+    <div class="container-fluid d-flex main-content-wrapper">
+        <!-- Sidebar (común en todas las páginas) -->
+        <aside class="sidebar p-4 d-flex flex-column align-items-center">
+            <div class="icon mb-4"><i class="fab fa-twitter"></i></div>
+            <nav class="nav flex-column w-100">
+                <a href="index.html" class="nav-link text-white"><i class="fas fa-home"></i> Home</a>
+                <a href="favorites.html" class="nav-link text-white"><i class="fas fa-star"></i> Events</a>
+                <a href="profile.html" class="nav-link text-white"><i class="fas fa-user"></i> Profile</a>
             </nav>
-            <button id="logout-button" class="logout-btn">Cerrar Sesión</button>
+            <button id="logout-button" class="btn logout-btn mt-4 w-100">Cerrar Sesión</button>
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="search-bar">
-                <input type="text" id="search-input" class="search-input" placeholder="Buscar eventos...">
-                <button id="search-button" class="search-btn"><i class="fas fa-search"></i></button>
-            </div>  
-            <h2>Favorite Events</h2>
-            <div id="favorites-feed" class="feed">
-                <!-- Favorite posts will be displayed here -->
+        <!-- Main Content Area (contenido variable) -->
+        <main class="main-content flex-grow-1 p-4">
+            <!-- Título y Contenido Variable por Página -->
+            <h2 class="text-white mb-3">Events</h2>
+            <div class="content">
+                <!-- Contenido para Home, Events o Profile -->
             </div>
         </main>
 
-        <!-- Right Sidebar - Additional Information Section -->
-        <aside class="sidebar-right">
-
-            
-            <!-- Popular Events Section -->
-            <div class="popular-events">
-                <h3>Popular Events</h3>
-                <div class="popular-event-item">
-                    <p><strong>Technology Conference 2024</strong></p>
-                    <p class="event-date">October 30, 2024</p>
-                </div>
-                <div class="popular-event-item">
-                    <p><strong>Music Festival Summer</strong></p>
-                    <p class="event-date">November 15, 2024</p>
-                </div>
-                <div class="popular-event-item">
-                    <p><strong>Art Expo International</strong></p>
-                    <p class="event-date">December 10, 2024</p>
-                </div>
-                <div class="popular-event-item">
-                    <p><strong>Fitness Bootcamp</strong></p>
-                    <p class="event-date">January 8, 2025</p>
-                </div>
-            </div>
-
-            <!-- Recommended Events Section -->
-            <div class="recommended-events">
-                <h3>Recommended for You</h3>
-                <div class="recommended-event-item">
-                    <p><strong>Startup Pitch Night</strong></p>
-                    <p class="event-date">November 20, 2024</p>
-                </div>
-                <div class="recommended-event-item">
-                    <p><strong>Cooking Workshop</strong></p>
-                    <p class="event-date">December 5, 2024</p>
-                </div>
-                <div class="recommended-event-item">
-                    <p><strong>Photography Walk</strong></p>
-                    <p class="event-date">December 18, 2024</p>
-                </div>
-            </div>
-
-            <!-- Friends Attending Section -->
-            <div class="friends-attending">
-                <h3>Friends Attending</h3>
-                <div class="friend-attending-item">
-                    <p><strong>John Doe</strong> is attending <em>Music Festival Summer</em></p>
-                    <p class="event-date">November 15, 2024</p>
-                </div>
-                <div class="friend-attending-item">
-                    <p><strong>Jane Smith</strong> is attending <em>Fitness Bootcamp</em></p>
-                    <p class="event-date">January 8, 2025</p>
-                </div>
-            </div>
+        <!-- Right Sidebar (común en todas las páginas) -->
+        <aside class="sidebar-right p-4">
+            <h4 class="text-white">Right Sidebar Content</h4>
+            <!-- Contenido adicional aquí, si es necesario -->
         </aside>
     </div>
 
-    <script>
-        const favoritesFeed = document.getElementById("favorites-feed");
-        const likedEvents = JSON.parse(localStorage.getItem("likedEvents")) || [];
-
-        likedEvents.forEach(event => {
-            const post = document.createElement("div");
-            post.classList.add("post");
-
-            const postHeader = document.createElement("div");
-            postHeader.classList.add("post-header");
-
-            const avatar = document.createElement("div");
-            avatar.classList.add("post-avatar");
-            avatar.innerText = event.owner.charAt(0).toUpperCase();
-
-            const userInfo = document.createElement("div");
-            userInfo.classList.add("post-user-info");
-
-            const username = document.createElement("p");
-            username.classList.add("post-username");
-            username.innerText = `@${event.owner}`;
-
-            const postDate = document.createElement("p");
-            postDate.classList.add("post-date");
-            postDate.innerText = `${event.date}`;
-
-            userInfo.appendChild(username);
-            userInfo.appendChild(postDate);
-
-            postHeader.appendChild(avatar);
-            postHeader.appendChild(userInfo);
-
-            const postContent = document.createElement("div");
-            postContent.classList.add("post-content");
-            const postText = document.createElement("p");
-            postText.innerText = event.content;
-
-            postContent.appendChild(postText);
-
-            post.appendChild(postHeader);
-            post.appendChild(postContent);
-
-            favoritesFeed.appendChild(post);
-        });
-    </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

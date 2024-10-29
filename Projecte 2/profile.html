@@ -3,111 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Page Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="icon">
-                <i class="fab fa-x-twitter"></i>
-            </div>
-            <nav class="nav-links">
-                <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Home</a>
-                                <a href="favorites.html" class="nav-item"><i class="fas fa-star"></i> Events</a>
-
-                <a href="profile.html" class="nav-item active"><i class="fas fa-user"></i> Profile</a>
+    <div class="container-fluid d-flex main-content-wrapper">
+        <!-- Sidebar (común en todas las páginas) -->
+        <aside class="sidebar p-4 d-flex flex-column align-items-center">
+            <div class="icon mb-4"><i class="fab fa-twitter"></i></div>
+            <nav class="nav flex-column w-100">
+                <a href="index.html" class="nav-link text-white"><i class="fas fa-home"></i> Home</a>
+                <a href="favorites.html" class="nav-link text-white"><i class="fas fa-star"></i> Events</a>
+                <a href="profile.html" class="nav-link text-white"><i class="fas fa-user"></i> Profile</a>
             </nav>
-            <button id="logout-button" class="logout-btn">Cerrar Sesión</button>
+            <button id="logout-button" class="btn logout-btn mt-4 w-100">Cerrar Sesión</button>
         </aside>
 
-        <!-- Main Content - Profile -->
-        <main class="main-content">
-            <!-- Profile Section -->
-            <div id="profile-section">
-                <div class="profile-header">
-                    <button onclick="window.location.href='index.html'" class="back-btn">&larr;</button>
-                    <h2 id="profile-name">User Name</h2>
-                    <span id="post-count">0 posts</span>
-                </div>
-                <div class="profile-banner">
-                    <div class="profile-avatar-large" id="profile-avatar-large">A</div>
-                    <button class="profile-edit-btn">Set up profile</button>
-                </div>
-                <div class="profile-details">
-                    <h3 id="full-name">User Full Name</h3>
-                    <p id="username">@username</p>
-                    <p id="join-date"><i class="fas fa-calendar-alt"></i> Joined April 2024</p>
-                    <p><span id="following-count">0</span> Following <span id="followers-count">0</span> Followers</p>
-                </div>
-                <div class="profile-tabs">
-                    <button class="tab active">Posts</button>
-                    <button class="tab">Replies</button>
-                    <button class="tab">Highlights</button>
-                    <button class="tab">Articles</button>
-                    <button class="tab">Media</button>
-                    <button class="tab">Likes</button>
-                </div>
+        <!-- Main Content Area (contenido variable) -->
+        <main class="main-content flex-grow-1 p-4">
+            <!-- Título y Contenido Variable por Página -->
+            <h2 class="text-white mb-3">Profile</h2>
+            <div class="content">
+                <!-- Contenido para Home, Events o Profile -->
             </div>
         </main>
 
-        <!-- Right Sidebar with Recommendations and Trends -->
-        <aside class="sidebar-right">
-            <div class="search-bar">
-                <input type="text" id="search-input" class="search-input" placeholder="Buscar eventos...">
-                <button id="search-button" class="search-btn"><i class="fas fa-search"></i></button>
-            </div>
-            
-            <div class="who-to-follow">
-                <h3>Who to follow</h3>
-                <div class="follow-suggestion">
-                    <div class="suggestion-avatar">N</div>
-                    <div class="suggestion-info">
-                        <p>Nike</p>
-                        <span>@Nike</span>
-                    </div>
-                    <button class="follow-btn">Follow</button>
-                </div>
-                <div class="follow-suggestion">
-                    <div class="suggestion-avatar">U</div>
-                    <div class="suggestion-info">
-                        <p>UFC</p>
-                        <span>@UFC</span>
-                    </div>
-                    <button class="follow-btn">Follow</button>
-                </div>
-                <div class="follow-suggestion">
-                    <div class="suggestion-avatar">D</div>
-                    <div class="suggestion-info">
-                        <p>DAN</p>
-                        <span>@1spiderdan</span>
-                    </div>
-                    <button class="follow-btn">Follow</button>
-                </div>
-            </div>
-            <div class="trending">
-                <h3>Trends for you</h3>
-                <div class="trend">
-                    <p>#GHDBT8</p>
-                    <span>67.2K posts</span>
-                </div>
-                <div class="trend">
-                    <p>#GH27O</p>
-                    <span>57.7K posts</span>
-                </div>
-                <div class="trend">
-                    <p>#SalvadosSuperSubmarina</p>
-                    <span>5,389 posts</span>
-                </div>
-            </div>
+        <!-- Right Sidebar (común en todas las páginas) -->
+        <aside class="sidebar-right p-4">
+            <h4 class="text-white">Right Sidebar Content</h4>
+            <!-- Contenido adicional aquí, si es necesario -->
         </aside>
     </div>
 
-    <!-- JavaScript for dynamic profile content -->
-    <script src="profile.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
