@@ -41,9 +41,47 @@
             <label for="comentarios">Comentarios:</label>
             <textarea id="comentarios" name="comentarios" rows="4"></textarea>
         </div>
+                <!-- BOTÓN ARCOIRIS -->
+                <div class="button-item" onclick="window.location.href='index.php?r=formulario/procesar'">
+                <button class="btn-rainbow">Enviar</button>
+                <style>
+                    .btn-rainbow {
+                        background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff);
+                        color: white;
+                        padding: 12px 24px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        background-size: 200% auto;
+                        animation: rainbow 3s linear infinite;
+                    }
+                    @keyframes rainbow { 
+                        to { background-position: 200% center; }
+                    }
+                </style>
+            </div>
 
-        <button type="submit">Enviar Datos</button>
     </form>
-    <button onclick="window.location.href='index.php?r=botones'">BOTONES</button>
+<br>
+
+            <!-- BOTÓN RETRO -->
+            <div class="button-item" onclick="window.location.href='index.php?r=botones'">
+                <button class="btn-retro">Ver todos los botones</button>
+                <style>
+                    .btn-retro {
+                        background: #ffd800;
+                        color: #000;
+                        padding: 12px 24px;
+                        border: 3px solid #000;
+                        box-shadow: 4px 4px 0 #000;
+                        cursor: pointer;
+                        transition: all 0.1s ease;
+                    }
+                    .btn-retro:active {
+                        transform: translate(4px, 4px);
+                        box-shadow: 0 0 0 #000;
+                    }
+                </style>
+            </div>
 </body>
 </html>

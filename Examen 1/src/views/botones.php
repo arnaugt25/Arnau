@@ -648,6 +648,588 @@
                 </script>
             </div>
 
+            <!-- BOTÓN NEÓN PULSANTE -->
+            <div class="button-item">
+                <button class="btn-neon-pulse">Neón Pulsante</button>
+                <style>
+                    .btn-neon-pulse {
+                        background: #000;
+                        color: #0ff;
+                        padding: 12px 24px;
+                        border: 2px solid #0ff;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        animation: neonPulse 1.5s infinite;
+                        text-shadow: 0 0 5px #0ff;
+                    }
+                    @keyframes neonPulse {
+                        0% { box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #0ff; }
+                        50% { box-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 30px #0ff; }
+                        100% { box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #0ff; }
+                    }
+                </style>
+            </div>
+
+            <!-- BOTÓN EXPLOSIÓN -->
+            <div class="button-item">
+                <button class="btn-explosion" onclick="explode(this)">¡Explota!</button>
+                <style>
+                    .btn-explosion {
+                        background: #e74c3c;
+                        color: white;
+                        padding: 12px 24px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    }
+                    .particle {
+                        position: absolute;
+                        pointer-events: none;
+                        background: #e74c3c;
+                        border-radius: 50%;
+                    }
+                </style>
+                <script>
+                    function explode(btn) {
+                        for(let i = 0; i < 20; i++) {
+                            createParticle(btn);
+                        }
+                        setTimeout(() => {
+                            btn.style.transform = 'scale(0)';
+                            setTimeout(() => {
+                                btn.style.transform = 'scale(1)';
+                            }, 500);
+                        }, 100);
+                    }
+
+                    function createParticle(btn) {
+                        const particle = document.createElement('div');
+                        particle.classList.add('particle');
+                        const rect = btn.getBoundingClientRect();
+                        particle.style.width = '10px';
+                        particle.style.height = '10px';
+                        particle.style.left = rect.left + rect.width/2 + 'px';
+                        particle.style.top = rect.top + rect.height/2 + 'px';
+                        document.body.appendChild(particle);
+
+                        const angle = Math.random() * Math.PI * 2;
+                        const velocity = 5 + Math.random() * 5;
+                        const tx = Math.cos(angle) * 100;
+                        const ty = Math.sin(angle) * 100;
+
+                        particle.style.transition = 'all 0.5s ease-out';
+                        requestAnimationFrame(() => {
+                            particle.style.transform = `translate(${tx}px, ${ty}px)`;
+                            particle.style.opacity = '0';
+                        });
+
+                        setTimeout(() => particle.remove(), 500);
+                    }
+                </script>
+            </div>
+
+            <!-- BOTÓN MATRIX -->
+            <div class="button-item">
+                <button class="btn-matrix" onmouseover="matrixEffect(this)" onmouseout="stopMatrixEffect(this)">Matrix</button>
+                <style>
+                    .btn-matrix {
+                        background: #000;
+                        color: #0f0;
+                        padding: 12px 24px;
+                        border: 1px solid #0f0;
+                        cursor: pointer;
+                        font-family: 'Courier New', monospace;
+                        position: relative;
+                        overflow: hidden;
+                    }
+                    .matrix-char {
+                        position: absolute;
+                        color: #0f0;
+                        font-size: 10px;
+                        pointer-events: none;
+                    }
+                </style>
+                <script>
+                    function matrixEffect(btn) {
+                        btn.matrixInterval = setInterval(() => {
+                            const char = document.createElement('div');
+                            char.classList.add('matrix-char');
+                            char.style.left = Math.random() * btn.offsetWidth + 'px';
+                            char.style.top = -20 + 'px';
+                            char.innerHTML = String.fromCharCode(0x30A0 + Math.random() * 96);
+                            btn.appendChild(char);
+
+                            const animation = char.animate([
+                                { top: '-20px', opacity: 1 },
+                                { top: btn.offsetHeight + 'px', opacity: 0 }
+                            ], {
+                                duration: 1000,
+                                easing: 'linear'
+                            });
+
+                            animation.onfinish = () => char.remove();
+                        }, 50);
+                    }
+
+                    function stopMatrixEffect(btn) {
+                        clearInterval(btn.matrixInterval);
+                        btn.querySelectorAll('.matrix-char').forEach(char => char.remove());
+                    }
+                </script>
+            </div>
+
+            <!-- BOTÓN MAGNÉTICO -->
+            <div class="button-item">
+                <button class="btn-magnetic">Magnético</button>
+                <style>
+                    .btn-magnetic {
+                        background: #9b59b6;
+                        color: white;
+                        padding: 12px 24px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        transition: transform 0.3s ease;
+                    }
+                </style>
+                <script>
+                    document.querySelectorAll('.btn-magnetic').forEach(btn => {
+                        btn.addEventListener('mousemove', e => {
+                            const rect = btn.getBoundingClientRect();
+                            const x = e.clientX - rect.left - rect.width/2;
+                            const y = e.clientY - rect.top - rect.height/2;
+                            btn.style.transform = `translate(${x/5}px, ${y/5}px)`;
+                        });
+
+                        btn.addEventListener('mouseleave', () => {
+                            btn.style.transform = 'translate(0, 0)';
+                        });
+                    });
+                </script>
+            </div>
+
+            <!-- BOTÓN HOLOGRÁFICO -->
+            <div class="button-item">
+                <button class="btn-holographic">Holográfico</button>
+                <style>
+                    .btn-holographic {
+                        background: linear-gradient(135deg, 
+                            rgba(255,255,255,0.1), 
+                            rgba(255,255,255,0.4));
+                        backdrop-filter: blur(10px);
+                        border: 1px solid rgba(255,255,255,0.2);
+                        color: white;
+                        padding: 12px 24px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        position: relative;
+                        overflow: hidden;
+                    }
+                    .btn-holographic::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: linear-gradient(90deg,
+                            transparent,
+                            rgba(255,255,255,0.2),
+                            transparent);
+                        transform: translateX(-100%);
+                    }
+                    .btn-holographic:hover::before {
+                        transform: translateX(100%);
+                        transition: transform 0.6s ease;
+                    }
+                </style>
+            </div>
+
+            <!-- BOTÓN LÍQUIDO -->
+            <div class="button-item">
+                <button class="btn-liquid">
+                    <span>Líquido</span>
+                    <div class="liquid"></div>
+                </button>
+                <style>
+                    .btn-liquid {
+                        position: relative;
+                        padding: 12px 24px;
+                        background: #4CAF50;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        overflow: hidden;
+                    }
+                    .liquid {
+                        position: absolute;
+                        top: 100%;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(255,255,255,0.3);
+                        transition: 0.5s;
+                    }
+                    .btn-liquid:hover .liquid {
+                        top: 0;
+                        border-radius: 0;
+                        animation: liquid 0.5s ease-in-out;
+                    }
+                    @keyframes liquid {
+                        0% { transform: translateY(100%); }
+                        100% { transform: translateY(0); }
+                    }
+                </style>
+            </div>
+
+            <!-- BOTÓN GLITCH -->
+            <div class="button-item">
+                <button class="btn-glitch" data-text="Glitch">Glitch</button>
+                <style>
+                    .btn-glitch {
+                        position: relative;
+                        padding: 12px 24px;
+                        background: #2c3e50;
+                        color: white;
+                        border: none;
+                        cursor: pointer;
+                    }
+                    .btn-glitch:hover {
+                        animation: glitch 0.3s linear infinite;
+                    }
+                    @keyframes glitch {
+                        0% { transform: translate(0); }
+                        20% { transform: translate(-2px, 2px); }
+                        40% { transform: translate(-2px, -2px); }
+                        60% { transform: translate(2px, 2px); }
+                        80% { transform: translate(2px, -2px); }
+                        100% { transform: translate(0); }
+                    }
+                    .btn-glitch::before,
+                    .btn-glitch::after {
+                        content: attr(data-text);
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: #2c3e50;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .btn-glitch::before {
+                        color: #ff0000;
+                        z-index: -1;
+                        clip: rect(24px, 550px, 90px, 0);
+                        animation: glitch-anim 2s linear infinite alternate-reverse;
+                    }
+                    .btn-glitch::after {
+                        color: #00ff00;
+                        z-index: -2;
+                        clip: rect(85px, 550px, 140px, 0);
+                        animation: glitch-anim 2s linear infinite alternate;
+                    }
+                </style>
+            </div>
+
+            <!-- BOTÓN CONTADOR REGRESIVO -->
+            <div class="button-item">
+                <button class="btn-countdown" onclick="startCountdown(this)">Iniciar 10s</button>
+                <style>
+                    .btn-countdown {
+                        background: #3498db;
+                        color: white;
+                        padding: 12px 24px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                    .btn-countdown.counting {
+                        background: #e74c3c;
+                    }
+                </style>
+                <script>
+                    function startCountdown(btn) {
+                        let count = 10;
+                        btn.classList.add('counting');
+                        const interval = setInterval(() => {
+                            btn.textContent = count;
+                            count--;
+                            if (count < 0) {
+                                clearInterval(interval);
+                                btn.textContent = 'Iniciar 10s';
+                                btn.classList.remove('counting');
+                            }
+                        }, 1000);
+                    }
+                </script>
+            </div>
+
+            <!-- BOTÓN COPY TO CLIPBOARD -->
+            <div class="button-item">
+                <button class="btn-copy" onclick="copyText(this)" data-text="¡Texto copiado!">
+                    Copiar texto
+                </button>
+                <style>
+                    .btn-copy {
+                        background: #2ecc71;
+                        color: white;
+                        padding: 12px 24px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    }
+                    .btn-copy.copied {
+                        background: #27ae60;
+                    }
+                </style>
+                <script>
+                    function copyText(btn) {
+                        navigator.clipboard.writeText("Este es el texto copiado");
+                        const originalText = btn.textContent;
+                        btn.textContent = btn.dataset.text;
+                        btn.classList.add('copied');
+                        setTimeout(() => {
+                            btn.textContent = originalText;
+                            btn.classList.remove('copied');
+                        }, 2000);
+                    }
+                </script>
+            </div>
+
+            <!-- BOTÓN SHAKE ERROR -->
+            <div class="button-item">
+                <button class="btn-shake" onclick="shakeButton(this)">Agitar Error</button>
+                <style>
+                    .btn-shake {
+                        background: #e74c3c;
+                        color: white;
+                        padding: 12px 24px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                    @keyframes shake {
+                        0%, 100% { transform: translateX(0); }
+                        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                        20%, 40%, 60%, 80% { transform: translateX(5px); }
+                    }
+                    .shake {
+                        animation: shake 0.5s ease-in-out;
+                    }
+                </style>
+                <script>
+                    function shakeButton(btn) {
+                        btn.classList.add('shake');
+                        setTimeout(() => btn.classList.remove('shake'), 500);
+                    }
+                </script>
+            </div>
+
+            <!-- BOTÓN PROGRESO CIRCULAR -->
+            <div class="button-item">
+                <button class="btn-progress" onclick="startProgress(this)">
+                    <span class="text">Iniciar</span>
+                    <svg class="progress-ring" width="24" height="24">
+                        <circle class="progress-ring__circle" stroke="white" stroke-width="2" fill="transparent" r="10" cx="12" cy="12"/>
+                    </svg>
+                </button>
+                <style>
+                    .btn-progress {
+                        background: #9b59b6;
+                        color: white;
+                        padding: 12px 24px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+                    .progress-ring__circle {
+                        transition: 0.35s stroke-dashoffset;
+                        transform: rotate(-90deg);
+                        transform-origin: 50% 50%;
+                        stroke-dasharray: 62.83;
+                        stroke-dashoffset: 62.83;
+                    }
+                </style>
+                <script>
+                    function startProgress(btn) {
+                        const circle = btn.querySelector('.progress-ring__circle');
+                        const text = btn.querySelector('.text');
+                        let progress = 0;
+                        
+                        const interval = setInterval(() => {
+                            progress += 1;
+                            const offset = 62.83 - (62.83 * progress) / 100;
+                            circle.style.strokeDashoffset = offset;
+                            
+                            if (progress >= 100) {
+                                clearInterval(interval);
+                                text.textContent = '¡Completado!';
+                                setTimeout(() => {
+                                    text.textContent = 'Iniciar';
+                                    circle.style.strokeDashoffset = 62.83;
+                                }, 1000);
+                            }
+                        }, 50);
+                    }
+                </script>
+            </div>
+
+            <!-- BOTÓN MORSE CODE -->
+            <div class="button-item">
+                <button class="btn-morse" onclick="morseCode(this, 'SOS')">Morse SOS</button>
+                <style>
+                    .btn-morse {
+                        background: #34495e;
+                        color: white;
+                        padding: 12px 24px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                    .btn-morse.active {
+                        background: #f1c40f;
+                    }
+                </style>
+                <script>
+                    function morseCode(btn, message) {
+                        const morse = {
+                            'S': '... ',
+                            'O': '--- ',
+                        };
+                        
+                        let index = 0;
+                        let charIndex = 0;
+                        const sequence = message.split('').map(char => morse[char]).join('');
+                        
+                        function flash() {
+                            if (index < sequence.length) {
+                                if (sequence[index] === '.') {
+                                    btn.classList.add('active');
+                                    setTimeout(() => btn.classList.remove('active'), 200);
+                                } else if (sequence[index] === '-') {
+                                    btn.classList.add('active');
+                                    setTimeout(() => btn.classList.remove('active'), 600);
+                                }
+                                index++;
+                                setTimeout(flash, sequence[index] === ' ' ? 600 : 200);
+                            }
+                        }
+                        
+                        flash();
+                    }
+                </script>
+            </div>
+
+            <!-- BOTÓN RULETA -->
+            <div class="button-item">
+                <button class="btn-roulette" onclick="spinRoulette(this)">Girar Ruleta</button>
+                <style>
+                    .btn-roulette {
+                        background: #e67e22;
+                        color: white;
+                        padding: 12px 24px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        transition: transform 3s cubic-bezier(0.2, 0.8, 0.2, 1);
+                    }
+                </style>
+                <script>
+                    function spinRoulette(btn) {
+                        const spins = 5 + Math.random() * 5;
+                        const deg = spins * 360;
+                        btn.style.transform = `rotate(${deg}deg)`;
+                        
+                        setTimeout(() => {
+                            btn.style.transform = 'rotate(0deg)';
+                        }, 3000);
+                    }
+                </script>
+            </div>
+
+            <!-- BOTÓN TYPEWRITER -->
+            <div class="button-item">
+                <button class="btn-typewriter" onclick="typeWriter(this)">Click para escribir</button>
+                <style>
+                    .btn-typewriter {
+                        background: #2c3e50;
+                        color: white;
+                        padding: 12px 24px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        min-width: 200px;
+                    }
+                </style>
+                <script>
+                    function typeWriter(btn) {
+                        const text = "Escribiendo...";
+                        let index = 0;
+                        btn.textContent = "";
+                        
+                        function type() {
+                            if (index < text.length) {
+                                btn.textContent += text.charAt(index);
+                                index++;
+                                setTimeout(type, 100);
+                            } else {
+                                setTimeout(() => {
+                                    btn.textContent = "Click para escribir";
+                                    index = 0;
+                                }, 1000);
+                            }
+                        }
+                        
+                        type();
+                    }
+                </script>
+            </div>
+
+            <!-- BOTÓN MÚSICA -->
+            <div class="button-item">
+                <button class="btn-music" onclick="playNote(this)">♪ Tocar Nota</button>
+                <style>
+                    .btn-music {
+                        background: #8e44ad;
+                        color: white;
+                        padding: 12px 24px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                    }
+                    .btn-music:active {
+                        transform: scale(0.95);
+                    }
+                </style>
+                <script>
+                    function playNote(btn) {
+                        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                        const oscillator = audioContext.createOscillator();
+                        const gainNode = audioContext.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioContext.destination);
+                        
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = 440; // La nota A4
+                        gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+                        
+                        oscillator.start();
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1);
+                        
+                        setTimeout(() => oscillator.stop(), 1000);
+                    }
+                </script>
+            </div>
+
         </div>
     </div>
 
