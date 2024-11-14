@@ -44,6 +44,5 @@
 
         <button type="submit">Enviar Datos</button>
     </form>
-    <button onclick="window.location.href='index.php?r=botones'">BOTONES</button>
 </body>
-</html>
+</html> 
